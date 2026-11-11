@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sylvanus Johnson — Frontend & API Software Engineer</title>
+  <meta name="description" content="Software Engineering portfolio of Sylvanus Johnson — Frontend Architecture, REST API Integrations, Interactive JavaScript Systems, and Python Tooling." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Top Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Subtle Engineering Background -->
+  <div class="bg-layer" aria-hidden="true">
+    <div class="bg-glow glow-cyan"></div>
+    <div class="bg-glow glow-emerald"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <!-- Sticky Navigation -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark">&lt;/&gt;</span>
+        <span class="brand-name">Sylvanus Johnson</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary Navigation">
+        <a href="#projects">Sandboxes</a>
+        <a href="#terminal-section">Terminal</a>
+        <a href="#stack">Stack</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="clock-pill" title="West Africa Time (UTC+1)">
+          <span class="clock-dot"></span>
+          <span id="liveClock">WAT --:--:--</span>
+        </div>
+        <button id="cmdTrigger" class="cmd-btn" type="button" aria-label="Open Command Palette">
+          <span>Command</span>
+          <kbd>Ctrl K</kbd>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+    <!-- HERO SECTION -->
+    <section class="hero reveal">
+      <div class="hero-copy">
+        <div class="status-pill">
+          <span class="pulse-dot"></span>
+          <span>Available for Software Engineering Roles &amp; Builds</span>
+        </div>
+
+        <h1 class="hero-title">
+          Engineering fast interfaces &amp; resilient <span class="text-gradient">API-driven web systems.</span>
+        </h1>
+
+        <p class="hero-sub">
+          I'm <strong>Sylvanus Johnson</strong>, a software developer focused on clean JavaScript state architecture, asynchronous REST API integrations, responsive web platforms, and analytical Python scripts.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">
+            <span>Explore Live Sandboxes</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="#terminal-section" class="btn btn-secondary">Launch CLI</a>
+          <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+            GitHub ↗
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-block">
+            <span class="stat-num">99+</span>
+            <span class="stat-label">Lighthouse Perf</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-block">
+            <span class="stat-num">ES6+ / REST</span>
+            <span class="stat-label">Core Architecture</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-block">
+            <span class="stat-num">Zero-Bloat</span>
+            <span class="stat-label">Clean Modular Code</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Tilt Interactive IDE / Telemetry Card -->
+      <div class="hero-ide-wrap">
+        <div class="ide-card" id="ideTilt">
+          <div class="ide-bar">
+            <div class="ide-dots">
+              <span class="dot-red"></span>
+              <span class="dot-yellow"></span>
+              <span class="dot-green"></span>
+            </div>
+            <div class="ide-tabs">
+              <button class="ide-tab active" data-tab="config" type="button">engineer.config.js</button>
+              <button class="ide-tab" data-tab="audit" type="button">lighthouse.audit</button>
+            </div>
+          </div>
+
+          <!-- Tab 1: Code Config -->
+          <div class="ide-body" id="ideTabConfig">
+<pre class="code-block"><code><span class="c-kw">export default</span> {
+  <span class="c-prop">engineer</span>: <span class="c-str">"Sylvanus Johnson"</span>,
+  <span class="c-prop">role</span>: <span class="c-str">"Frontend &amp; API Developer"</span>,
+  <span class="c-prop">stack</span>: [
+    <span class="c-str">"JavaScript (ES6+)"</span>,
+    <span class="c-str">"HTML5 / CSS3 Grid"</span>,
+    <span class="c-str">"REST APIs &amp; JSON"</span>,
+    <span class="c-str">"Python"</span>
+  ],
+  <span class="c-prop">focus</span>: <span class="c-str">"Interactive UX &amp; Clean State"</span>,
+  <span class="c-prop">openToWork</span>: <span class="c-bool">true</span>
+};</code></pre>
+          </div>
+
+          <!-- Tab 2: Lighthouse Telemetry -->
+          <div class="ide-body hidden" id="ideTabAudit">
+            <div class="audit-grid">
+              <div class="audit-item">
+                <div class="audit-ring">100</div>
+                <span>Performance</span>
+              </div>
+              <div class="audit-item">
+                <div class="audit-ring">99</div>
+                <span>Accessibility</span>
+              </div>
+              <div class="audit-item">
+                <div class="audit-ring">100</div>
+                <span>Best Practices</span>
+              </div>
+              <div class="audit-item">
+                <div class="audit-ring">100</div>
+                <span>SEO Ready</span>
+              </div>
+            </div>
+            <div class="audit-note">
+              Verified zero-layout-shift (CLS 0.00) &amp; semantic DOM structure.
+            </div>
+          </div>
+
+          <div class="ide-footer">
+            <span>UTF-8 · JavaScript</span>
+            <span class="ide-branch">main ✓ compiled</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE PROJECT SANDBOXES -->
+    <section id="projects" class="section reveal">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">// 01 · INTERACTIVE ENGINEERING SANDBOXES</span>
+          <h2 class="section-title">Test My Builds Right in the Browser</h2>
+        </div>
+
+        <div class="filter-bar" role="tablist" aria-label="Filter Projects">
+          <button class="filter-btn active" data-filter="all" type="button">All (4)</button>
+          <button class="filter-btn" data-filter="api" type="button">REST API</button>
+          <button class="filter-btn" data-filter="js" type="button">JavaScript</button>
+          <button class="filter-btn" data-filter="web" type="button">Web UI</button>
+          <button class="filter-btn" data-filter="python" type="button">Python</button>
+        </div>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Sandbox 1: Weather & Telemetry REST API -->
+        <article class="project-card spotlight-card" data-category="api">
+          <div class="card-meta">
+            <div class="tags">
+              <span>REST API</span>
+              <span>Async / Await</span>
+              <span>JSON</span>
+            </div>
+            <button class="code-pill" id="toggleWeatherJson" type="button">{ } Raw JSON</button>
+          </div>
+
+          <h3 class="card-title">Live Weather &amp; Telemetry API Client</h3>
+          <p class="card-desc">
+            Asynchronous endpoint client featuring multi-city state switching, structured JSON payload inspection, and latency telemetry.
+          </p>
+
+          <div class="sandbox-box">
+            <div class="seg-controls" id="citySelector">
+              <button class="seg-btn active" data-city="lagos" type="button">Lagos</button>
+              <button class="seg-btn" data-city="london" type="button">London</button>
+              <button class="seg-btn" data-city="newyork" type="button">New York</button>
+              <button class="seg-btn" data-city="tokyo" type="button">Tokyo</button>
+            </div>
+
+            <div id="weatherVisual" class="weather-visual">
+              <div class="weather-main">
+                <span class="weather-temp" id="wTemp">31°C</span>
+                <div>
+                  <div class="weather-cond" id="wCond">Scattered Clouds</div>
+                  <div class="weather-sub" id="wSub">Humidity: 74% · Wind: 14 km/h</div>
+                </div>
+              </div>
+              <span class="http-badge" id="wLatency">200 OK · 38ms</span>
+            </div>
+
+            <pre id="weatherJson" class="json-viewer hidden"></pre>
+          </div>
+
+          <div class="card-links">
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer">View Source on GitHub ↗</a>
+          </div>
+        </article>
+
+        <!-- Sandbox 2: Interactive JS Timed Quiz Engine -->
+        <article class="project-card spotlight-card" data-category="js">
+          <div class="card-meta">
+            <div class="tags">
+              <span>JavaScript ES6+</span>
+              <span>Timers</span>
+              <span>State Machine</span>
+            </div>
+            <span class="live-indicator" id="quizStreakBadge">Streak: 0 🔥</span>
+          </div>
+
+          <h3 class="card-title">Interactive JS Quiz &amp; Countdown Engine</h3>
+          <p class="card-desc">
+            Event-driven state machine built with question arrays, per-round countdown timers, streak multipliers, and instant DOM feedback.
+          </p>
+
+          <div class="sandbox-box quiz-sandbox">
+            <div class="timer-track">
+              <div class="timer-fill" id="quizTimerBar"></div>
+            </div>
+
+            <div class="quiz-header">
+              <span id="quizStep">Ready · 4 Questions</span>
+              <span id="quizScore">Score: 0</span>
+            </div>
+
+            <p class="quiz-prompt" id="quizPrompt">Test the live countdown &amp; state engine directly:</p>
+            <div class="quiz-choices" id="quizChoices">
+              <button class="quiz-btn start-quiz-btn" id="startQuizBtn" type="button">▶ Launch Timed Quiz Run</button>
+            </div>
+          </div>
+
+          <div class="card-links">
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer">View Source on GitHub ↗</a>
+          </div>
+        </article>
+
+        <!-- Sandbox 3: Corporate Web Platform & Responsive Scrubber -->
+        <article class="project-card spotlight-card" data-category="web">
+          <div class="card-meta">
+            <div class="tags">
+              <span>HTML5</span>
+              <span>CSS Grid</span>
+              <span>Responsive UI</span>
+            </div>
+            <div class="seg-controls compact" id="vpControls">
+              <button class="seg-btn active" data-vp="desktop" type="button">Desktop</button>
+              <button class="seg-btn" data-vp="tablet" type="button">Tablet</button>
+              <button class="seg-btn" data-vp="mobile" type="button">Mobile</button>
+            </div>
+          </div>
+
+          <h3 class="card-title">Corporate Enterprise Web Architecture</h3>
+          <p class="card-desc">
+            Production corporate web platform engineered with executive leadership profiles, service matrices, map integration, and fluid breakpoints.
+          </p>
+
+          <div class="sandbox-box vp-stage">
+            <div class="mini-browser" id="miniBrowser" data-mode="desktop">
+              <div class="mini-bar">
+                <span></span><span></span><span></span>
+                <em>corporate-platform.app</em>
+              </div>
+              <div class="mini-content">
+                <div class="mini-hero">
+                  <div class="mini-pill"></div>
+                  <div class="mini-line w-70"></div>
+                </div>
+                <div class="mini-grid">
+                  <div class="mini-card"></div>
+                  <div class="mini-card"></div>
+                  <div class="mini-card"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-links">
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer">View Source on GitHub ↗</a>
+          </div>
+        </article>
+
+        <!-- Sandbox 4: Python Compound Financial Simulator -->
+        <article class="project-card spotlight-card" data-category="python">
+          <div class="card-meta">
+            <div class="tags">
+              <span>Python Logic</span>
+              <span>Financial Math</span>
+              <span>Data Bars</span>
+            </div>
+            <span class="code-pill">A = P(1 + r)^t</span>
+          </div>
+
+          <h3 class="card-title">Compound Yield &amp; Analytics Simulator</h3>
+          <p class="card-desc">
+            Interactive port of my Python financial modeling script computing compound growth trajectories from dynamic user inputs.
+          </p>
+
+          <div class="sandbox-box calc-sandbox">
+            <div class="sliders-grid">
+              <label>
+                <span>Principal: <strong id="lblPrincipal">$5,000</strong></span>
+                <input type="range" id="rngPrincipal" min="1000" max="25000" step="1000" value="5000" />
+              </label>
+              <label>
+                <span>Annual Rate: <strong id="lblRate">12%</strong></span>
+                <input type="range" id="rngRate" min="2" max="25" step="1" value="12" />
+              </label>
+              <label>
+                <span>Horizon: <strong id="lblYears">8 yrs</strong></span>
+                <input type="range" id="rngYears" min="2" max="20" step="1" value="8" />
+              </label>
+            </div>
+
+            <div class="calc-output">
+              <div>
+                <span class="calc-label">Projected Final Value</span>
+                <div class="calc-total" id="calcFinal">$12,380</div>
+                <span class="calc-profit" id="calcGain">+$7,380 net interest</span>
+              </div>
+              <div class="bars-chart" id="calcBars" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="card-links">
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer">View Source on GitHub ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE DEVELOPER TERMINAL -->
+    <section id="terminal-section" class="section reveal">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">// 02 · INTERACTIVE DEVELOPER SHELL</span>
+          <h2 class="section-title">Query My Profile via CLI</h2>
+        </div>
+        <div class="cli-chips">
+          <button class="cli-chip" data-cmd="neofetch" type="button">neofetch</button>
+          <button class="cli-chip" data-cmd="skills" type="button">skills</button>
+          <button class="cli-chip" data-cmd="projects" type="button">projects</button>
+          <button class="cli-chip" data-cmd="contact" type="button">contact</button>
+          <button class="cli-chip" data-cmd="clear" type="button">clear</button>
+        </div>
+      </div>
+
+      <div class="terminal-window" id="terminalWindow">
+        <div class="terminal-bar">
+          <div class="ide-dots">
+            <span class="dot-red"></span>
+            <span class="dot-yellow"></span>
+            <span class="dot-green"></span>
+          </div>
+          <span class="terminal-title">sylvanus@dev-workstation: ~ (bash)</span>
+          <span>Click a chip or type below</span>
+        </div>
+
+        <div class="terminal-output" id="termOutput">
+          <div class="term-line muted">SylvanusOS v2.6.0 — Type <span class="accent">help</span> or click any command chip above.</div>
+        </div>
+
+        <form class="terminal-input-row" id="termForm" autocomplete="off">
+          <span class="prompt-prefix">sylvanus@dev:~$</span>
+          <input type="text" id="termInput" placeholder="Try: neofetch, skills, projects, about, contact, clear" aria-label="Terminal Command Input" />
+        </form>
+      </div>
+    </section>
+
+    <!-- TECH STACK & ARCHITECTURE -->
+    <section id="stack" class="section reveal">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">// 03 · ENGINEERING TOOLKIT</span>
+          <h2 class="section-title">Core Stack &amp; Capabilities</h2>
+        </div>
+      </div>
+
+      <div class="stack-grid">
+        <div class="stack-card spotlight-card">
+          <span class="stack-index">01</span>
+          <h3>Frontend Engineering</h3>
+          <p>Semantic HTML5, modern CSS3 Grid &amp; Flexbox, responsive design systems, fluid micro-animations, and accessible DOM architecture.</p>
+        </div>
+        <div class="stack-card spotlight-card">
+          <span class="stack-index">02</span>
+          <h3>JavaScript &amp; State Logic</h3>
+          <p>Modular ES6+, asynchronous Promises, event-driven state machines, timers, local persistence, and zero-dependency UI components.</p>
+        </div>
+        <div class="stack-card spotlight-card">
+          <span class="stack-index">03</span>
+          <h3>APIs, Data &amp; Python</h3>
+          <p>RESTful API consumption, JSON schema parsing, error resilience, and Python scripting for automation and financial modeling.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section reveal">
+      <div class="contact-banner spotlight-card">
+        <div class="contact-text">
+          <span class="eyebrow">// 04 · INITIALIZE CONNECTION</span>
+          <h2>Ready to ship clean, reliable software together?</h2>
+          <p>Reach out directly for frontend engineering roles, API builds, or custom web platforms.</p>
+        </div>
+
+        <div class="contact-cards">
+          <button type="button" class="contact-box copy-btn" data-copy="youngicon313@gmail.com" data-label="Email">
+            <span class="c-top">Email Address · <em>Click to Copy</em></span>
+            <strong>youngicon313@gmail.com</strong>
+          </button>
+
+          <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer" class="contact-box">
+            <span class="c-top">GitHub Profile · <em>Open ↗</em></span>
+            <strong>github.com/Sylvanus-YO</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <span>© <span id="year"></span> Sylvanus Johnson. Engineered with vanilla HTML, CSS &amp; JS.</span>
+    <span>Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open Command Palette</span>
+  </footer>
+
+  <!-- COMMAND PALETTE MODAL -->
+  <div id="cmdModal" class="cmd-backdrop hidden" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="cmd-dialog">
+      <div class="cmd-search">
+        <input type="text" id="cmdInput" placeholder="Jump to section, filter builds, or copy email..." autocomplete="off" />
+        <button id="cmdClose" class="cmd-esc" type="button">ESC</button>
+      </div>
+      <div id="cmdList" class="cmd-list"></div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

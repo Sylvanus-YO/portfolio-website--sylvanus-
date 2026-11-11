@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sylvanus Johnson — Frontend & API Software Engineer</title>
+  <meta name="description" content="Personal software engineering portfolio of Sylvanus Johnson — Frontend & API Software Engineer crafting fast web applications, REST API systems, interactive JavaScript tools, and Python utilities." />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            obsidian: '#07080a',
+            surface: '#0e1015',
+            elevated: '#141720',
+            line: 'rgba(255, 255, 255, 0.08)',
+            lineBright: 'rgba(255, 255, 255, 0.18)',
+            ink: '#f3f4f6',
+            muted: '#9ca3af',
+            dim: '#6b7280',
+            indigoAccent: '#6366f1',
+            cyanAccent: '#06b6d4',
+            emeraldAccent: '#10b981',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      --bg: #07080a;
+      --surface: #0e1015;
+      --elevated: #141720;
+      --border: rgba(255, 255, 255, 0.08);
+      --indigo: #6366f1;
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: #f3f4f6;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Aurora Mesh + Architectural Grid */
+    .aurora-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .aurora-blob {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(130px);
+      opacity: 0.16;
+      animation: auroraFloat 18s ease-in-out infinite alternate;
+    }
+
+    .blob-indigo {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+      top: -160px;
+      left: 8%;
+    }
+
+    .blob-cyan {
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+      top: 40px;
+      right: 5%;
+      animation-delay: -6s;
+    }
+
+    .blob-emerald {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, #10b981 0%, transparent 70%);
+      bottom: 8%;
+      left: 35%;
+      opacity: 0.09;
+      animation-delay: -11s;
+    }
+
+    @keyframes auroraFloat {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(28px, -24px, 0) scale(1.06); }
+    }
+
+    .arch-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-size: 56px 56px;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+      mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 35%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 35%, transparent 100%);
+    }
+
+    /* Scroll Progress Bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      z-index: 100;
+      background: linear-gradient(90deg, #6366f1 0%, #06b6d4 55%, #10b981 100%);
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.65);
+      transition: width 0.08s linear;
+    }
+
+    /* Glassmorphic Floating Navbar */
+    .glass-nav {
+      background: rgba(10, 12, 17, 0.76);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: 0 16px 40px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Raycast / Linear Spotlight Card */
+    .spotlight-card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(20, 23, 32, 0.72) 0%, rgba(14, 16, 21, 0.92) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s var(--ease-expo), transform 0.3s var(--ease-expo), box-shadow 0.3s var(--ease-expo);
+    }
+
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        520px circle at var(--mx, -500px) var(--my, -500px),
+        rgba(99, 102, 241, 0.13),
+        rgba(6, 182, 212, 0.05) 35%,
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .spotlight-card:hover {
+      border-color: rgba(99, 102, 241, 0.38);
+      box-shadow: 0 22px 50px -20px rgba(0, 0, 0, 0.8);
+    }
+
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-body {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 3D Perspective IDE Card */
+    .ide-tilt {
+      transform-style: preserve-3d;
+      transition: transform 0.22s ease-out;
+    }
+
+    /* Gradient Text */
+    .text-gradient {
+      background: linear-gradient(135deg, #ffffff 15%, #a5b4fc 55%, #67e8f9 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Staggered Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s var(--ease-expo), transform 0.7s var(--ease-expo);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Magnetic Button Smoothness */
+    .magnetic {
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+    }
+
+    /* Custom Range Sliders for Compound Simulator */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      background: #1f2433;
+      border-radius: 999px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #06b6d4;
+      border: 2px solid #07080a;
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.7);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.18);
+    }
+
+    /* Syntax Highlighting Colors */
+    .tok-kw { color: #c084fc; }
+    .tok-fn { color: #60a5fa; }
+    .tok-str { color: #34d399; }
+    .tok-num { color: #fbbf24; }
+    .tok-key { color: #67e8f9; }
+    .tok-cm { color: #6b7280; font-style: italic; }
+
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07080a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2430;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #323a4d;
+    }
+  </style>
+</head>
+<body class="selection:bg-indigoAccent/30 selection:text-white">
+
+  <!-- Top Scroll Progress Indicator -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Ambient Aurora & Subtle Grid -->
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-blob blob-indigo"></div>
+    <div class="aurora-blob blob-cyan"></div>
+    <div class="aurora-blob blob-emerald"></div>
+  </div>
+  <div class="arch-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       STICKY FLOATING GLASSMORPHIC NAVBAR
+       ======================================================================== -->
+  <header class="sticky top-3 z-50 px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto glass-nav rounded-2xl px-4 sm:px-5 h-14 flex items-center justify-between gap-3">
+      <!-- Monogram + Live Clock -->
+      <div class="flex items-center gap-3.5">
+        <a href="#top" class="inline-flex items-center gap-2.5 group">
+          <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigoAccent to-cyanAccent p-[1px] flex items-center justify-center">
+            <span class="w-full h-full bg-obsidian rounded-[7px] flex items-center justify-center font-mono text-[11px] font-bold text-white">
+              SJ
+            </span>
+          </span>
+          <span class="font-mono text-xs sm:text-[13px] font-semibold tracking-tight text-ink group-hover:text-cyanAccent transition-colors">
+            sylvanus.johnson
+          </span>
+        </a>
+        <span class="hidden lg:inline-block h-3.5 w-[1px] bg-white/10"></span>
+        <span id="wat-clock" class="hidden lg:inline-flex items-center gap-1.5 font-mono text-[11px] text-muted tabular-nums">
+          <span class="w-1.5 h-1.5 rounded-full bg-emeraldAccent"></span>
+          <span>WAT (UTC+1) --:--:--</span>
+        </span>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 font-mono text-xs text-muted">
+        <a href="#projects" class="px-3 py-1.5 rounded-lg hover:text-ink hover:bg-white/5 transition-colors">Projects</a>
+        <a href="#playground" class="px-3 py-1.5 rounded-lg hover:text-ink hover:bg-white/5 transition-colors">Playground</a>
+        <a href="#stack" class="px-3 py-1.5 rounded-lg hover:text-ink hover:bg-white/5 transition-colors">Stack</a>
+        <a href="#terminal" class="px-3 py-1.5 rounded-lg hover:text-ink hover:bg-white/5 transition-colors">Terminal</a>
+        <a href="#contact" class="px-3 py-1.5 rounded-lg hover:text-ink hover:bg-white/5 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Command Palette Trigger -->
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          onclick="openCommandPalette()"
+          aria-label="Open Command Palette"
+          class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-elevated/90 border border-white/10 hover:border-indigoAccent/50 text-xs text-muted hover:text-ink transition-all"
+        >
+          <svg class="w-3.5 h-3.5 text-cyanAccent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
+          <span class="hidden sm:inline font-mono text-[11px]">Command</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-obsidian border border-white/10 font-mono text-[10px] text-ink">⌘K</kbd>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MAIN CONTENT CONTAINER
+       ======================================================================== -->
+  <main id="top" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-28 space-y-28 sm:space-y-32">
+
+    <!-- ======================================================================
+         HERO SECTION
+         ====================================================================== -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center reveal visible">
+      <!-- Left Column: Engineering Identity -->
+      <div class="lg:col-span-7 space-y-6">
+        <!-- Availability Pill -->
+        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emeraldAccent/10 border border-emeraldAccent/25">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emeraldAccent opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emeraldAccent"></span>
+          </span>
+          <span class="font-mono text-[11px] font-medium text-emerald-300">
+            Available for Software Engineering Roles &amp; Freelance Builds
+          </span>
+        </div>
+
+        <!-- Kinetic Headline -->
+        <div class="space-y-2">
+          <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.06] text-gradient">
+            Sylvanus Johnson
+          </h1>
+          <p class="font-mono text-sm sm:text-base font-medium text-cyanAccent tracking-tight">
+            Frontend &amp; API Software Engineer
+          </p>
+        </div>
+
+        <!-- Sharp Engineering Bio -->
+        <p class="text-base sm:text-lg text-muted leading-relaxed max-w-2xl">
+          Crafting fast, resilient web applications, asynchronous <span class="text-ink font-medium">REST API</span> architectures, interactive <span class="text-ink font-medium">JavaScript</span> systems, and <span class="text-ink font-medium">Python</span> automation tools with obsessive attention to UI polish, clean state logic, and sub-second performance.
+        </p>
+
+        <!-- Primary CTAs -->
+        <div class="flex flex-wrap items-center gap-3.5 pt-1">
+          <a
+            href="#projects"
+            class="magnetic inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-indigoAccent to-cyanAccent text-white font-semibold text-sm shadow-lg shadow-indigoAccent/25 hover:shadow-cyanAccent/35"
+          >
+            <span>Explore Selected Builds</span>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+
+          <a
+            href="#terminal"
+            class="magnetic inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-surface border border-white/12 hover:border-cyanAccent/50 text-ink font-mono text-xs sm:text-sm transition-colors"
+          >
+            <span class="text-cyanAccent">&gt;_</span>
+            <span>Open Interactive Terminal</span>
+          </a>
+
+          <a
+            href="https://github.com/Sylvanus-YO"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="magnetic inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/25 text-muted hover:text-ink font-mono text-xs sm:text-sm transition-colors"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+            <span>GitHub ↗</span>
+          </a>
+        </div>
+
+        <!-- Engineering Pillar Metrics -->
+        <div class="pt-4 grid grid-cols-3 gap-4 border-t border-white/10 max-w-xl">
+          <div>
+            <div class="font-mono text-sm sm:text-base font-semibold text-ink">ES6+ · Async</div>
+            <div class="text-xs text-muted">Modular Frontend</div>
+          </div>
+          <div>
+            <div class="font-mono text-sm sm:text-base font-semibold text-ink">REST · JSON</div>
+            <div class="text-xs text-muted">API Integrations</div>
+          </div>
+          <div>
+            <div class="font-mono text-sm sm:text-base font-semibold text-ink">Python · UI</div>
+            <div class="text-xs text-muted">Logic &amp; Systems</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Live Code / System Telemetry IDE Card -->
+      <div class="lg:col-span-5" style="perspective: 1100px;">
+        <div id="hero-ide" class="ide-tilt spotlight-card shadow-2xl">
+          <div class="card-body">
+            <!-- IDE Window Bar & Tabs -->
+            <div class="flex items-center justify-between px-4 py-3 bg-obsidian/80 border-b border-white/10">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400/80"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+              </div>
+              <div class="flex items-center gap-1 bg-surface p-0.5 rounded-lg border border-white/10 font-mono text-[11px]">
+                <button
+                  type="button"
+                  onclick="switchIdeTab('config')"
+                  id="ide-tab-config"
+                  class="px-2.5 py-1 rounded-md bg-elevated text-ink transition-colors"
+                >
+                  engineer.config.js
+                </button>
+                <button
+                  type="button"
+                  onclick="switchIdeTab('lighthouse')"
+                  id="ide-tab-lighthouse"
+                  class="px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors"
+                >
+                  telemetry.json
+                </button>
+              </div>
+            </div>
+
+            <!-- Tab 1: Syntax-Highlighted engineer.config.js -->
+            <div id="ide-panel-config" class="p-4 sm:p-5 font-mono text-xs leading-relaxed overflow-x-auto">
+<pre class="text-gray-300"><code><span class="tok-cm">// Production Engineering Profile</span>
+<span class="tok-kw">export const</span> <span class="tok-fn">engineer</span> = {
+  <span class="tok-key">name</span>: <span class="tok-str">"Sylvanus Johnson"</span>,
+  <span class="tok-key">role</span>: <span class="tok-str">"Frontend &amp; API Software Engineer"</span>,
+  <span class="tok-key">coreStack</span>: [
+    <span class="tok-str">"JavaScript (ES6+)"</span>, <span class="tok-str">"HTML5"</span>, <span class="tok-str">"CSS3"</span>,
+    <span class="tok-str">"REST APIs"</span>, <span class="tok-str">"JSON"</span>, <span class="tok-str">"Python"</span>
+  ],
+  <span class="tok-key">architecture</span>: {
+    <span class="tok-key">cleanState</span>: <span class="tok-num">true</span>,
+    <span class="tok-key">responsiveGrid</span>: <span class="tok-str">"mobile-first"</span>,
+    <span class="tok-key">errorResilience</span>: <span class="tok-str">"strict"</span>
+  },
+  <span class="tok-fn">ship</span>: <span class="tok-kw">async</span> (<span class="tok-key">spec</span>) =&gt; <span class="tok-kw">await</span> <span class="tok-fn">deploy</span>(spec)
+};</code></pre>
+            </div>
+
+            <!-- Tab 2: Live Lighthouse & Runtime Rings -->
+            <div id="ide-panel-lighthouse" class="hidden p-5 space-y-4">
+              <div class="grid grid-cols-3 gap-3 text-center">
+                <div class="p-3 rounded-xl bg-obsidian/70 border border-white/10">
+                  <div class="mx-auto w-12 h-12 rounded-full border-2 border-emeraldAccent flex items-center justify-center font-mono text-sm font-bold text-emeraldAccent shadow-[0_0_15px_rgba(16,185,129,0.25)]">
+                    99
+                  </div>
+                  <div class="font-mono text-[10px] text-muted mt-2">Performance</div>
+                </div>
+                <div class="p-3 rounded-xl bg-obsidian/70 border border-white/10">
+                  <div class="mx-auto w-12 h-12 rounded-full border-2 border-emeraldAccent flex items-center justify-center font-mono text-sm font-bold text-emeraldAccent shadow-[0_0_15px_rgba(16,185,129,0.25)]">
+                    100
+                  </div>
+                  <div class="font-mono text-[10px] text-muted mt-2">Accessibility</div>
+                </div>
+                <div class="p-3 rounded-xl bg-obsidian/70 border border-white/10">
+                  <div class="mx-auto w-12 h-12 rounded-full border-2 border-cyanAccent flex items-center justify-center font-mono text-sm font-bold text-cyanAccent shadow-[0_0_15px_rgba(6,182,212,0.25)]">
+                    100
+                  </div>
+                  <div class="font-mono text-[10px] text-muted mt-2">Best Practices</div>
+                </div>
+              </div>
+              <div class="rounded-xl bg-obsidian/70 border border-white/10 p-3 font-mono text-[11px] space-y-1.5">
+                <div class="flex justify-between"><span class="text-muted">First Contentful Paint</span><span class="text-emeraldAccent">0.4s</span></div>
+                <div class="flex justify-between"><span class="text-muted">API Error Boundary</span><span class="text-cyanAccent">Verified</span></div>
+                <div class="flex justify-between"><span class="text-muted">GitHub Handle</span><span class="text-ink">Sylvanus-YO</span></div>
+              </div>
+            </div>
+
+            <!-- Live Compile Footer Bar -->
+            <div class="px-4 py-2.5 bg-obsidian/90 border-t border-white/10 flex items-center justify-between font-mono text-[11px]">
+              <div class="flex items-center gap-2 text-emeraldAccent">
+                <span class="w-2 h-2 rounded-full bg-emeraldAccent animate-pulse"></span>
+                <span id="compile-status">Compiled cleanly in 42ms</span>
+              </div>
+              <span class="text-muted">UTF-8 · ES2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 01 — SELECTED ENGINEERING PROJECTS & LIVE PLAYGROUNDS
+         ====================================================================== -->
+    <section id="projects" class="space-y-8 reveal">
+      <div id="playground" class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 font-mono text-xs text-indigoAccent mb-2">
+            <span>01</span>
+            <span class="w-6 h-[1px] bg-indigoAccent/50"></span>
+            <span>SELECTED BUILDS &amp; INTERACTIVE SANDBOXES</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+            Production Systems &amp; Live Engineering Proofs
+          </h2>
+          <p class="text-sm text-muted mt-1 max-w-xl">
+            Every card below embeds a working interactive micro-application—test the API endpoints, run the state quiz, resize the viewport, or model compound returns right in place.
+          </p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="flex flex-wrap gap-1.5 bg-surface p-1.5 rounded-xl border border-white/10 font-mono text-xs" role="tablist">
+          <button type="button" onclick="filterProjects('all')" data-filter="all" class="proj-filter px-3 py-1.5 rounded-lg bg-indigoAccent text-white font-medium transition-all">All</button>
+          <button type="button" onclick="filterProjects('api')" data-filter="api" class="proj-filter px-3 py-1.5 rounded-lg text-muted hover:text-ink transition-all">APIs</button>
+          <button type="button" onclick="filterProjects('js')" data-filter="js" class="proj-filter px-3 py-1.5 rounded-lg text-muted hover:text-ink transition-all">Interactive JS</button>
+          <button type="button" onclick="filterProjects('web')" data-filter="web" class="proj-filter px-3 py-1.5 rounded-lg text-muted hover:text-ink transition-all">Web Platforms</button>
+          <button type="button" onclick="filterProjects('python')" data-filter="python" class="proj-filter px-3 py-1.5 rounded-lg text-muted hover:text-ink transition-all">Python</button>
+        </div>
+      </div>
+
+      <!-- Bento Grid -->
+      <div id="projects-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+        <!-- ================================================================
+             PROJECT 1: REAL-TIME WEATHER & TELEMETRY API APPLICATION
+             ================================================================ -->
+        <article data-category="api" class="project-card spotlight-card lg:col-span-7 p-6 flex flex-col justify-between">
+          <div class="card-body space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded-md bg-indigoAccent/15 text-indigo-300 border border-indigoAccent/30">REST API</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">Async JS</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">JSON</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">HTML5/CSS3</span>
+              </div>
+              <button
+                type="button"
+                id="weather-mode-btn"
+                onclick="toggleWeatherView()"
+                class="px-2.5 py-1 rounded-lg bg-obsidian border border-white/15 hover:border-cyanAccent font-mono text-[11px] text-cyanAccent transition-colors"
+              >
+                { } Raw JSON
+              </button>
+            </div>
+
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink">Real-Time Weather &amp; Telemetry API Application</h3>
+              <p class="text-sm text-muted mt-1 leading-relaxed">
+                Asynchronous client architecture consuming weather telemetry endpoints with structured JSON parsing, request latency profiling, dynamic condition theming, and graceful fallback states.
+              </p>
+            </div>
+
+            <!-- Embedded Live API Request Playground -->
+            <div class="rounded-xl bg-obsidian/90 border border-white/10 p-4 space-y-3.5">
+              <!-- Endpoint Route Bar -->
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10 font-mono text-[11px]">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="px-1.5 py-0.5 rounded bg-emeraldAccent/15 text-emeraldAccent font-semibold">GET</span>
+                  <span id="weather-endpoint-url" class="text-muted truncate">/v1/forecast?city=lagos&amp;units=metric</span>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="text-emeraldAccent">200 OK</span>
+                  <span id="weather-latency" class="px-2 py-0.5 rounded bg-white/5 text-muted">36ms</span>
+                </div>
+              </div>
+
+              <!-- City Selector Chips -->
+              <div class="flex flex-wrap gap-1.5 font-mono text-xs">
+                <button type="button" onclick="selectWeatherCity('lagos')" data-city="lagos" class="city-chip px-3 py-1 rounded-lg transition-all">Lagos</button>
+                <button type="button" onclick="selectWeatherCity('london')" data-city="london" class="city-chip px-3 py-1 rounded-lg transition-all">London</button>
+                <button type="button" onclick="selectWeatherCity('newyork')" data-city="newyork" class="city-chip px-3 py-1 rounded-lg transition-all">New York</button>
+                <button type="button" onclick="selectWeatherCity('tokyo')" data-city="tokyo" class="city-chip px-3 py-1 rounded-lg transition-all">Tokyo</button>
+              </div>
+
+              <!-- Visual Telemetry Output -->
+              <div id="weather-visual-panel" class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 items-center">
+                <div class="sm:col-span-2 flex items-center gap-4">
+                  <div id="weather-temp" class="font-mono text-3xl sm:text-4xl font-extrabold text-ink">31°C</div>
+                  <div>
+                    <div id="weather-condition" class="text-sm font-semibold text-ink">Warm &amp; Partly Cloudy</div>
+                    <div id="weather-region" class="font-mono text-xs text-muted">Lagos, NG · 6.5244° N, 3.3792° E</div>
+                  </div>
+                </div>
+                <div class="rounded-lg bg-surface/90 border border-white/10 p-2.5 font-mono text-[11px] space-y-1">
+                  <div class="flex justify-between"><span class="text-muted">Humidity</span><span id="weather-hum" class="text-ink">74%</span></div>
+                  <div class="flex justify-between"><span class="text-muted">Wind</span><span id="weather-wind" class="text-ink">15 km/h</span></div>
+                  <div class="flex justify-between"><span class="text-muted">UV Index</span><span id="weather-uv" class="text-cyanAccent">7 High</span></div>
+                </div>
+              </div>
+
+              <!-- Syntax-Highlighted Raw JSON Output -->
+              <pre id="weather-json-panel" class="hidden font-mono text-[11px] text-cyan-300 overflow-x-auto leading-relaxed pt-1"></pre>
+            </div>
+          </div>
+
+          <div class="card-body pt-4 mt-5 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-muted">fetch() · AbortController · JSON Schema</span>
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer" class="text-ink hover:text-cyanAccent transition-colors">
+              View on GitHub ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- ================================================================
+             PROJECT 2: INTERACTIVE JAVASCRIPT QUIZ & STATE ENGINE
+             ================================================================ -->
+        <article data-category="js" class="project-card spotlight-card lg:col-span-5 p-6 flex flex-col justify-between">
+          <div class="card-body space-y-4">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded-md bg-cyanAccent/15 text-cyan-300 border border-cyanAccent/30">JavaScript ES6+</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">State &amp; Timer</span>
+              </div>
+              <span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-emeraldAccent">
+                <span class="w-1.5 h-1.5 rounded-full bg-emeraldAccent animate-pulse"></span>Playable
+              </span>
+            </div>
+
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink">Interactive JS Quiz &amp; State Engine</h3>
+              <p class="text-sm text-muted mt-1 leading-relaxed">
+                Modular state machine featuring structured question arrays, live countdown timer bars, streak multipliers, and instant feedback UI.
+              </p>
+            </div>
+
+            <!-- Embedded Live Mini-Quiz Sandbox -->
+            <div class="rounded-xl bg-obsidian/90 border border-white/10 p-4 space-y-3">
+              <div class="flex items-center justify-between font-mono text-[11px]">
+                <span id="quiz-progress-text" class="text-muted">Q1 / 4</span>
+                <div class="flex items-center gap-3">
+                  <span id="quiz-streak" class="text-amber-400">Streak: 0</span>
+                  <span id="quiz-score-badge" class="px-2 py-0.5 rounded bg-indigoAccent/20 text-indigo-300">Score: 0</span>
+                </div>
+              </div>
+
+              <!-- Live Countdown Bar -->
+              <div class="w-full h-1.5 rounded-full bg-surface overflow-hidden">
+                <div id="quiz-timer-bar" class="h-full bg-gradient-to-r from-indigoAccent to-cyanAccent transition-all duration-200" style="width: 100%;"></div>
+              </div>
+
+              <p id="quiz-question-box" class="text-xs sm:text-sm font-medium text-ink min-h-[38px] leading-snug"></p>
+
+              <div id="quiz-options-box" class="space-y-1.5"></div>
+            </div>
+          </div>
+
+          <div class="card-body pt-4 mt-5 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-muted">DOM Architecture · Event Loop</span>
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer" class="text-ink hover:text-cyanAccent transition-colors">
+              View on GitHub ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- ================================================================
+             PROJECT 3: CORPORATE WEB PLATFORM (ENTERPRISE SYSTEMS UI)
+             ================================================================ -->
+        <article data-category="web" class="project-card spotlight-card lg:col-span-6 p-6 flex flex-col justify-between">
+          <div class="card-body space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded-md bg-emeraldAccent/15 text-emerald-300 border border-emeraldAccent/30">Enterprise Web UI</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">CSS Grid</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">Maps UI</span>
+              </div>
+
+              <!-- Interactive Viewport Scrubber Controls -->
+              <div class="inline-flex bg-obsidian p-0.5 rounded-lg border border-white/10 font-mono text-[11px]">
+                <button type="button" onclick="scrubViewport('desktop')" data-vp="desktop" class="vp-scrub px-2 py-0.5 rounded-md transition-colors">Desktop</button>
+                <button type="button" onclick="scrubViewport('tablet')" data-vp="tablet" class="vp-scrub px-2 py-0.5 rounded-md transition-colors">Tablet</button>
+                <button type="button" onclick="scrubViewport('mobile')" data-vp="mobile" class="vp-scrub px-2 py-0.5 rounded-md transition-colors">Mobile</button>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink">Corporate Systems Web Platform</h3>
+              <p class="text-sm text-muted mt-1 leading-relaxed">
+                Full production corporate website engineered with executive leadership profiles, interactive service matrices, embedded location mapping, and fluid multi-breakpoint responsiveness.
+              </p>
+            </div>
+
+            <!-- Interactive Morphing Browser Preview -->
+            <div class="rounded-xl bg-obsidian/90 border border-white/10 p-4 flex justify-center overflow-hidden">
+              <div
+                id="corp-preview-frame"
+                style="width: 100%;"
+                class="transition-all duration-500 ease-out rounded-lg bg-surface border border-white/15 overflow-hidden"
+              >
+                <div class="px-3 py-2 bg-elevated border-b border-white/10 flex items-center justify-between">
+                  <div class="flex items-center gap-1">
+                    <span class="w-2 h-2 rounded-full bg-white/20"></span>
+                    <span class="w-2 h-2 rounded-full bg-white/20"></span>
+                    <span class="w-2 h-2 rounded-full bg-white/20"></span>
+                  </div>
+                  <span id="corp-vp-readout" class="font-mono text-[10px] text-cyanAccent">1280px · Enterprise Grid</span>
+                </div>
+
+                <div class="p-3 space-y-2.5">
+                  <!-- Mini Hero Banner -->
+                  <div class="p-2.5 rounded-md bg-gradient-to-r from-indigoAccent/20 to-cyanAccent/10 border border-indigoAccent/25 flex items-center justify-between">
+                    <div class="space-y-1">
+                      <div class="h-2 w-28 rounded bg-white/80"></div>
+                      <div class="h-1.5 w-40 rounded bg-white/30"></div>
+                    </div>
+                    <span class="px-2 py-0.5 rounded bg-indigoAccent text-[9px] font-mono text-white">Services</span>
+                  </div>
+
+                  <!-- Morphing Service & Leadership Grid -->
+                  <div id="corp-Preview-grid" class="grid grid-cols-3 gap-2 transition-all duration-300">
+                    <div class="p-2 rounded bg-obsidian/80 border border-white/10 space-y-1">
+                      <span class="font-mono text-[9px] text-indigo-300">01 Systems</span>
+                      <div class="h-1.5 w-full rounded bg-white/20"></div>
+                    </div>
+                    <div class="p-2 rounded bg-obsidian/80 border border-white/10 space-y-1">
+                      <span class="font-mono text-[9px] text-cyan-300">02 Leadership</span>
+                      <div class="h-1.5 w-full rounded bg-white/20"></div>
+                    </div>
+                    <div class="p-2 rounded bg-obsidian/80 border border-white/10 space-y-1">
+                      <span class="font-mono text-[9px] text-emerald-300">03 Map Pin</span>
+                      <div class="h-1.5 w-full rounded bg-white/20"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body pt-4 mt-5 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-muted">Semantic HTML5 · Responsive UI · Maps</span>
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer" class="text-ink hover:text-cyanAccent transition-colors">
+              View on GitHub ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- ================================================================
+             PROJECT 4: PYTHON FINANCIAL & COMPOUND ANALYTICS CALCULATOR
+             ================================================================ -->
+        <article data-category="python" class="project-card spotlight-card lg:col-span-6 p-6 flex flex-col justify-between">
+          <div class="card-body space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap gap-1.5 font-mono text-[11px]">
+                <span class="px-2.5 py-0.5 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30">Python</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">Algorithmic Logic</span>
+                <span class="px-2.5 py-0.5 rounded-md bg-white/5 text-muted border border-white/10">Data Modeling</span>
+              </div>
+              <span class="font-mono text-[11px] text-muted">A = P(1 + r/n)<sup class="text-[9px]">nt</sup></span>
+            </div>
+
+            <div>
+              <h3 class="text-lg sm:text-xl font-bold text-ink">Python Financial &amp; Compound Analytics Engine</h3>
+              <p class="text-sm text-muted mt-1 leading-relaxed">
+                Input-validated financial computation model built in Python to project multi-year compound growth curves—rendered below as a live interactive simulator.
+              </p>
+            </div>
+
+            <!-- Interactive Live Compound Interest Simulator -->
+            <div class="rounded-xl bg-obsidian/90 border border-white/10 p-4 space-y-3.5">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <div class="flex justify-between font-mono text-[11px] mb-1">
+                    <span class="text-muted">Principal</span>
+                    <span id="ci-p-val" class="text-ink font-semibold">$5,000</span>
+                  </div>
+                  <input id="ci-principal" type="range" min="1000" max="50000" step="1000" value="5000" oninput="updateCompoundSim()" />
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-[11px] mb-1">
+                    <span class="text-muted">Annual Rate</span>
+                    <span id="ci-r-val" class="text-cyanAccent font-semibold">12%</span>
+                  </div>
+                  <input id="ci-rate" type="range" min="2" max="25" step="1" value="12" oninput="updateCompoundSim()" />
+                </div>
+                <div>
+                  <div class="flex justify-between font-mono text-[11px] mb-1">
+                    <span class="text-muted">Horizon</span>
+                    <span id="ci-y-val" class="text-indigo-300 font-semibold">8 yrs</span>
+                  </div>
+                  <input id="ci-years" type="range" min="2" max="20" step="1" value="8" oninput="updateCompoundSim()" />
+                </div>
+              </div>
+
+              <!-- Output Readout + Dynamic Growth Bar Chart -->
+              <div class="pt-2 border-t border-white/10 flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <span class="block font-mono text-[10px] uppercase tracking-wider text-muted">Projected Maturity Value</span>
+                  <span id="ci-total" class="font-mono text-2xl font-extrabold text-emeraldAccent">$12,380</span>
+                  <span id="ci-profit" class="font-mono text-xs text-muted ml-2">(+$7,380 yield)</span>
+                </div>
+                <!-- Mini Dynamic Bar Trajectory -->
+                <div id="ci-bars" class="flex items-end gap-1 h-12 flex-1 min-w-[140px] max-w-[220px]"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body pt-4 mt-5 border-t border-white/10 flex items-center justify-between font-mono text-xs">
+            <span class="text-muted">Python CLI · Input Validation · Precision Math</span>
+            <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer" class="text-ink hover:text-cyanAccent transition-colors">
+              View on GitHub ↗
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 02 — INTERACTIVE DEVELOPER TERMINAL (sylvanus@dev:~)
+         ====================================================================== -->
+    <section id="terminal" class="space-y-6 reveal">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 font-mono text-xs text-cyanAccent mb-2">
+            <span>02</span>
+            <span class="w-6 h-[1px] bg-cyanAccent/50"></span>
+            <span>INTERACTIVE SHELL</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+            Query My Environment Directly
+          </h2>
+          <p class="text-sm text-muted mt-1">
+            Click a quick-command chip or type <code class="px-1.5 py-0.5 rounded bg-surface border border-white/10 font-mono text-xs text-cyanAccent">help</code>, <code class="px-1.5 py-0.5 rounded bg-surface border border-white/10 font-mono text-xs text-cyanAccent">neofetch</code>, <code class="px-1.5 py-0.5 rounded bg-surface border border-white/10 font-mono text-xs text-cyanAccent">skills</code>, or <code class="px-1.5 py-0.5 rounded bg-surface border border-white/10 font-mono text-xs text-cyanAccent">projects</code> below.
+          </p>
+        </div>
+
+        <!-- Quick Command Chips -->
+        <div class="flex flex-wrap gap-1.5 font-mono text-xs">
+          <button type="button" onclick="execTerminalCmd('neofetch')" class="px-2.5 py-1 rounded-lg bg-surface border border-white/10 hover:border-cyanAccent/50 text-muted hover:text-ink transition-colors">neofetch</button>
+          <button type="button" onclick="execTerminalCmd('skills')" class="px-2.5 py-1 rounded-lg bg-surface border border-white/10 hover:border-cyanAccent/50 text-muted hover:text-ink transition-colors">skills</button>
+          <button type="button" onclick="execTerminalCmd('projects')" class="px-2.5 py-1 rounded-lg bg-surface border border-white/10 hover:border-cyanAccent/50 text-muted hover:text-ink transition-colors">projects</button>
+          <button type="button" onclick="execTerminalCmd('contact')" class="px-2.5 py-1 rounded-lg bg-surface border border-white/10 hover:border-cyanAccent/50 text-muted hover:text-ink transition-colors">contact</button>
+          <button type="button" onclick="execTerminalCmd('clear')" class="px-2.5 py-1 rounded-lg bg-surface border border-white/10 hover:border-rose-500/50 text-muted hover:text-rose-300 transition-colors">clear</button>
+        </div>
+      </div>
+
+      <!-- Terminal Emulator Window -->
+      <div class="spotlight-card shadow-2xl">
+        <div class="card-body">
+          <!-- Window Titlebar -->
+          <div class="px-4 py-3 bg-obsidian/90 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-400/80"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+              <span class="ml-2 font-mono text-xs text-muted">sylvanus@dev: ~/portfolio — zsh</span>
+            </div>
+            <span class="font-mono text-[11px] text-dim hidden sm:inline">Interactive CLI v2.4</span>
+          </div>
+
+          <!-- Terminal Output History -->
+          <div
+            id="term-output"
+            onclick="document.getElementById('term-input').focus()"
+            class="p-4 sm:p-6 h-80 overflow-y-auto font-mono text-xs sm:text-[13px] leading-relaxed space-y-3 bg-obsidian/70 cursor-text"
+          ></div>
+
+          <!-- Terminal Prompt Input Line -->
+          <form
+            onsubmit="handleTerminalSubmit(event)"
+            class="px-4 sm:px-6 py-3.5 bg-obsidian/95 border-t border-white/10 flex items-center gap-2.5 font-mono text-xs sm:text-[13px]"
+          >
+            <span class="text-emeraldAccent font-semibold shrink-0">sylvanus@dev:~$</span>
+            <input
+              id="term-input"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Type a command (try 'help' or 'about') and press Enter..."
+              class="w-full bg-transparent text-ink placeholder:text-dim focus:outline-none"
+            />
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 03 — ENGINEERING ARCHITECTURE & TECH STACK MATRIX
+         ====================================================================== -->
+    <section id="stack" class="space-y-8 reveal">
+      <div>
+        <div class="inline-flex items-center gap-2 font-mono text-xs text-emeraldAccent mb-2">
+          <span>03</span>
+          <span class="w-6 h-[1px] bg-emeraldAccent/50"></span>
+          <span>STACK &amp; ENGINEERING TELEMETRY</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+          Core Technologies &amp; Tooling Matrix
+        </h2>
+      </div>
+
+      <!-- 4-Column Stack Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Category 1 -->
+        <div class="spotlight-card p-5 space-y-3">
+          <div class="card-body space-y-3">
+            <div class="w-9 h-9 rounded-lg bg-indigoAccent/15 border border-indigoAccent/30 flex items-center justify-center font-mono text-xs font-bold text-indigo-300">
+              UI
+            </div>
+            <h3 class="text-base font-bold text-ink">Frontend &amp; UI</h3>
+            <ul class="space-y-2 font-mono text-xs text-muted">
+              <li class="flex justify-between"><span>HTML5 Semantic</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>CSS3 / Grid / Flex</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>Responsive Design</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>Interactive DOM</span><span class="text-cyanAccent">Adv</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="spotlight-card p-5 space-y-3">
+          <div class="card-body space-y-3">
+            <div class="w-9 h-9 rounded-lg bg-cyanAccent/15 border border-cyanAccent/30 flex items-center justify-center font-mono text-xs font-bold text-cyan-300">
+              API
+            </div>
+            <h3 class="text-base font-bold text-ink">APIs &amp; Data</h3>
+            <ul class="space-y-2 font-mono text-xs text-muted">
+              <li class="flex justify-between"><span>RESTful Fetch</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>Async / Promises</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>JSON Modeling</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>Maps &amp; 3rd-Party</span><span class="text-cyanAccent">Int</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="spotlight-card p-5 space-y-3">
+          <div class="card-body space-y-3">
+            <div class="w-9 h-9 rounded-lg bg-emeraldAccent/15 border border-emeraldAccent/30 flex items-center justify-center font-mono text-xs font-bold text-emerald-300">
+              DEV
+            </div>
+            <h3 class="text-base font-bold text-ink">Languages &amp; Logic</h3>
+            <ul class="space-y-2 font-mono text-xs text-muted">
+              <li class="flex justify-between"><span>JavaScript (ES6+)</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>Python 3</span><span class="text-cyanAccent">Active</span></li>
+              <li class="flex justify-between"><span>State Machines</span><span class="text-emeraldAccent">Core</span></li>
+              <li class="flex justify-between"><span>Algorithmic Math</span><span class="text-cyanAccent">Active</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Category 4 -->
+        <div class="spotlight-card p-5 space-y-3">
+          <div class="card-body space-y-3">
+            <div class="w-9 h-9 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center font-mono text-xs font-bold text-amber-300">
+              OPS
+            </div>
+            <h3 class="text-base font-bold text-ink">Workflow &amp; Tooling</h3>
+            <ul class="space-y-2 font-mono text-xs text-muted">
+              <li class="flex justify-between"><span>Git &amp; GitHub</span><span class="text-emeraldAccent">Daily</span></li>
+              <li class="flex justify-between"><span>VS Code</span><span class="text-emeraldAccent">Daily</span></li>
+              <li class="flex justify-between"><span>DevTools Profiling</span><span class="text-cyanAccent">Core</span></li>
+              <li class="flex justify-between"><span>System Debugging</span><span class="text-emeraldAccent">Core</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Contribution Activity Heatmap Card -->
+      <div class="spotlight-card p-6">
+        <div class="card-body space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-semibold text-ink">Engineering Commit &amp; Build Cadence</h3>
+              <p id="heatmap-readout" class="font-mono text-xs text-muted">
+                Hover any cell to inspect simulated weekly build &amp; debugging activity · @Sylvanus-YO
+              </p>
+            </div>
+            <a
+              href="https://github.com/Sylvanus-YO"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-mono text-xs text-cyanAccent hover:underline"
+            >
+              github.com/Sylvanus-YO ↗
+            </a>
+          </div>
+
+          <div class="overflow-x-auto pb-1">
+            <div id="heatmap-grid" class="inline-grid grid-rows-7 grid-flow-col gap-1.5 min-w-max"></div>
+          </div>
+
+          <div class="flex items-center justify-between font-mono text-[11px] text-muted pt-1">
+            <span>Consistent hands-on iteration &amp; incremental debugging</span>
+            <div class="flex items-center gap-1.5">
+              <span>Less</span>
+              <span class="w-2.5 h-2.5 rounded-xs bg-white/5"></span>
+              <span class="w-2.5 h-2.5 rounded-xs bg-emerald-900/70"></span>
+              <span class="w-2.5 h-2.5 rounded-xs bg-emerald-600/80"></span>
+              <span class="w-2.5 h-2.5 rounded-xs bg-emerald-400"></span>
+              <span>More</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 04 — DIRECT CONTACT & QUICK INQUIRY COMPOSER
+         ====================================================================== -->
+    <section id="contact" class="space-y-8 reveal">
+      <div>
+        <div class="inline-flex items-center gap-2 font-mono text-xs text-indigoAccent mb-2">
+          <span>04</span>
+          <span class="w-6 h-[1px] bg-indigoAccent/50"></span>
+          <span>DIRECT CONTACT</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-ink">
+          Let’s Build Something Fast &amp; Reliable
+        </h2>
+        <p class="text-sm text-muted mt-1 max-w-xl">
+          Open to software engineering internships, junior/mid frontend &amp; API roles, and custom web application builds.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Left: One-Click Copy Channels -->
+        <div class="lg:col-span-5 space-y-4 flex flex-col justify-between">
+          <div class="space-y-4">
+            <!-- Email Copy Card -->
+            <button
+              type="button"
+              onclick="copyToClipboard('youngicon313@gmail.com', 'Email address copied')"
+              class="w-full text-left spotlight-card p-5 group"
+            >
+              <div class="card-body flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                  <span class="font-mono text-[11px] text-cyanAccent uppercase tracking-wider">Primary Email</span>
+                  <div class="text-base font-semibold text-ink truncate mt-1">youngicon313@gmail.com</div>
+                  <div class="text-xs text-muted mt-0.5">Click anywhere on card to copy address</div>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg bg-obsidian border border-white/10 group-hover:border-cyanAccent font-mono text-[11px] text-muted group-hover:text-cyanAccent shrink-0 transition-colors">
+                  Copy
+                </span>
+              </div>
+            </button>
+
+            <!-- GitHub Profile Card -->
+            <a
+              href="https://github.com/Sylvanus-YO"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block spotlight-card p-5 group"
+            >
+              <div class="card-body flex items-center justify-between gap-3">
+                <div>
+                  <span class="font-mono text-[11px] text-indigo-300 uppercase tracking-wider">Source &amp; Repositories</span>
+                  <div class="text-base font-semibold text-ink mt-1">github.com/Sylvanus-YO</div>
+                  <div class="text-xs text-muted mt-0.5">Explore JavaScript, API, Web &amp; Python codebases</div>
+                </div>
+                <span class="px-2.5 py-1 rounded-lg bg-obsidian border border-white/10 group-hover:border-indigoAccent font-mono text-[11px] text-muted group-hover:text-ink shrink-0 transition-colors">
+                  Open ↗
+                </span>
+              </div>
+            </a>
+          </div>
+
+          <div class="rounded-2xl bg-surface/70 border border-white/10 p-4 font-mono text-xs text-muted">
+            <div class="flex items-center justify-between">
+              <span>Response SLA</span>
+              <span class="text-emeraldAccent">&lt; 24 Hours</span>
+            </div>
+            <div class="flex items-center justify-between mt-1.5">
+              <span>Timezone</span>
+              <span class="text-ink">West Africa Time (UTC+1)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Quick-Message Composer -->
+        <div class="lg:col-span-7 spotlight-card p-6">
+          <form onsubmit="handleQuickMessage(event)" class="card-body space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-bold text-ink">Quick Engineering Inquiry</h3>
+              <span class="font-mono text-[11px] text-muted">Generates instant mailto or clipboard payload</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div>
+                <label for="msg-name" class="block font-mono text-[11px] text-muted mb-1.5">Your Name / Team</label>
+                <input
+                  id="msg-name"
+                  type="text"
+                  required
+                  placeholder="Alex Rivera · Acme Corp"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 focus:border-cyanAccent text-sm text-ink placeholder:text-dim focus:outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label for="msg-scope" class="block font-mono text-[11px] text-muted mb-1.5">Project / Role Scope</label>
+                <select
+                  id="msg-scope"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 focus:border-cyanAccent text-sm text-ink focus:outline-none transition-colors"
+                >
+                  <option value="Software Engineering Role">Software Engineering Role</option>
+                  <option value="Custom Web Application Build">Custom Web Application Build</option>
+                  <option value="Frontend & REST API Integration">Frontend &amp; REST API Integration</option>
+                  <option value="Technical Collaboration">Technical Collaboration</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="msg-body" class="block font-mono text-[11px] text-muted mb-1.5">Brief Details</label>
+              <textarea
+                id="msg-body"
+                rows="3"
+                required
+                placeholder="Tell me about the timeline, tech stack, or engineering role..."
+                class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 focus:border-cyanAccent text-sm text-ink placeholder:text-dim focus:outline-none transition-colors resize-none"
+              ></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                type="submit"
+                class="magnetic inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigoAccent to-cyanAccent text-white font-semibold text-xs sm:text-sm shadow-lg shadow-indigoAccent/20"
+              >
+                <span>Launch in Email Client</span>
+                <span>↗</span>
+              </button>
+              <button
+                type="button"
+                onclick="copyFormattedInquiry()"
+                class="px-4 py-2.5 rounded-xl bg-obsidian border border-white/12 hover:border-white/30 font-mono text-xs text-muted hover:text-ink transition-colors"
+              >
+                Copy Formatted Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Minimalist Engineering Footer -->
+  <footer class="relative z-10 border-t border-white/10 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-muted">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emeraldAccent"></span>
+        <span>© <span id="footer-year"></span> Sylvanus Johnson · Software Engineer</span>
+      </div>
+      <div class="flex items-center gap-5">
+        <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener noreferrer" class="hover:text-ink transition-colors">GitHub</a>
+        <button type="button" onclick="copyToClipboard('youngicon313@gmail.com', 'Email copied')" class="hover:text-ink transition-colors">Email</button>
+        <button type="button" onclick="openCommandPalette()" class="hover:text-cyanAccent transition-colors">⌘K Palette</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       COMMAND PALETTE MODAL (⌘K / Ctrl+K)
+       ======================================================================== -->
+  <div
+    id="cmd-modal"
+    onclick="if (event.target === this) closeCommandPalette()"
+    class="fixed inset-0 z-50 hidden items-start justify-center pt-20 sm:pt-28 px-4 bg-black/75 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Command Palette"
+  >
+    <div class="w-full max-w-lg rounded-2xl bg-surface border border-white/15 shadow-2xl overflow-hidden">
+      <div class="flex items-center gap-3 px-4 py-3.5 border-b border-white/10">
+        <span class="font-mono text-sm text-cyanAccent">&gt;</span>
+        <input
+          id="cmd-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Jump to section, run terminal command, or copy email..."
+          oninput="renderPaletteItems(this.value)"
+          class="w-full bg-transparent text-sm text-ink placeholder:text-dim focus:outline-none"
+        />
+        <button
+          type="button"
+          onclick="closeCommandPalette()"
+          class="px-2 py-0.5 rounded bg-obsidian border border-white/10 font-mono text-[10px] text-muted hover:text-ink"
+        >
+          ESC
+        </button>
+      </div>
+      <div id="cmd-list" class="p-2 max-h-72 overflow-y-auto space-y-1"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div
+    id="toast"
+    role="status"
+    aria-live="polite"
+    class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-200 flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-elevated border border-cyanAccent/40 text-ink font-mono text-xs shadow-2xl"
+  >
+    <span class="w-2 h-2 rounded-full bg-emeraldAccent"></span>
+    <span id="toast-msg">Copied to clipboard</span>
+  </div>
+
+  <!-- ========================================================================
+       APPLICATION SCRIPTS
+       ======================================================================== -->
+  <script>
+    // 1. Scroll Progress & Live WAT Clock
+    function updateScrollProgress() {
+      const doc = document.documentElement;
+      const scrollTop = doc.scrollTop || document.body.scrollTop;
+      const scrollHeight = doc.scrollHeight - doc.clientHeight;
+      const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      const bar = document.getElementById('scroll-progress');
+      if (bar) bar.style.width = pct + '%';
+    }
+
+    function updateWatClock() {
+      const clockEl = document.getElementById('wat-clock');
+      if (!clockEl) return;
+      try {
+        const timeStr = new Date().toLocaleTimeString('en-GB', {
+          timeZone: 'Africa/Lagos',
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        });
+        clockEl.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emeraldAccent"></span><span>WAT (UTC+1) ${timeStr}</span>`;
+      } catch (e) {
+        clockEl.textContent = 'UTC+1 Live';
+      }
+    }
+
+    // 2. Spotlight Hover & Magnetic Buttons & 3D Hero IDE Tilt
+    function initInteractiveSurfaces() {
+      document.querySelectorAll('.spotlight-card').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+          card.style.setProperty('--my', `${e.clientY - r.top}px`);
+        });
+      });
+
+      document.querySelectorAll('.magnetic').forEach((btn) => {
+        btn.addEventListener('mousemove', (e) => {
+          const r = btn.getBoundingClientRect();
+          const x = (e.clientX - r.left - r.width / 2) * 0.14;
+          const y = (e.clientY - r.top - r.height / 2) * 0.18;
+          btn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'translate(0px, 0px)';
+        });
+      });
+
+      const ide = document.getElementById('hero-ide');
+      if (ide) {
+        ide.addEventListener('mousemove', (e) => {
+          const r = ide.getBoundingClientRect();
+          const rx = ((e.clientY - r.top) / r.height - 0.5) * -8;
+          const ry = ((e.clientX - r.left) / r.width - 0.5) * 8;
+          ide.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+        });
+        ide.addEventListener('mouseleave', () => {
+          ide.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+      }
+    }
+
+    function switchIdeTab(tab) {
+      const isConfig = tab === 'config';
+      document.getElementById('ide-panel-config').classList.toggle('hidden', !isConfig);
+      document.getElementById('ide-panel-lighthouse').classList.toggle('hidden', isConfig);
+
+      document.getElementById('ide-tab-config').className = isConfig
+        ? 'px-2.5 py-1 rounded-md bg-elevated text-ink transition-colors'
+        : 'px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors';
+
+      document.getElementById('ide-tab-lighthouse').className = !isConfig
+        ? 'px-2.5 py-1 rounded-md bg-elevated text-ink transition-colors'
+        : 'px-2.5 py-1 rounded-md text-muted hover:text-ink transition-colors';
+
+      document.getElementById('compile-status').textContent = isConfig
+        ? 'Compiled cleanly in 42ms'
+        : 'Lighthouse audit: 99/100 verified';
+    }
+
+    // 3. Project Filter Tabs
+    function filterProjects(category) {
+      document.querySelectorAll('.proj-filter').forEach((btn) => {
+        const active = btn.getAttribute('data-filter') === category;
+        btn.className = active
+          ? 'proj-filter px-3 py-1.5 rounded-lg bg-indigoAccent text-white font-medium transition-all'
+          : 'proj-filter px-3 py-1.5 rounded-lg text-muted hover:text-ink transition-all';
+      });
+
+      document.querySelectorAll('.project-card').forEach((card) => {
+        const match = category === 'all' || card.getAttribute('data-category') === category;
+        card.classList.toggle('hidden', !match);
+        if (category !== 'all' && match) {
+          card.classList.add('lg:col-span-12');
+        } else {
+          card.classList.remove('lg:col-span-12');
+        }
+      });
+    }
+
+    // 4. Weather & Telemetry API Playground
+    const weatherDataset = {
+      lagos: {
+        temp: '31°C',
+        condition: 'Warm & Partly Cloudy',
+        region: 'Lagos, NG · 6.5244° N, 3.3792° E',
+        hum: '74%',
+        wind: '15 km/h',
+        uv: '7 High',
+        latency: '36ms',
+        json: {
+          status: 200,
+          city: 'Lagos',
+          country: 'NG',
+          metrics: { temp_c: 31.2, humidity: 74, wind_kmh: 15, uv_index: 7 },
+          cached: false,
+          response_ms: 36
+        }
+      },
+      london: {
+        temp: '13°C',
+        condition: 'Cool Overcast Mist',
+        region: 'London, GB · 51.5072° N, 0.1276° W',
+        hum: '69%',
+        wind: '19 km/h',
+        uv: '2 Low',
+        latency: '48ms',
+        json: {
+          status: 200,
+          city: 'London',
+          country: 'GB',
+          metrics: { temp_c: 13.4, humidity: 69, wind_kmh: 19, uv_index: 2 },
+          cached: false,
+          response_ms: 48
+        }
+      },
+      newyork: {
+        temp: '18°C',
+        condition: 'Crisp Clear Skies',
+        region: 'New York, US · 40.7128° N, 74.0060° W',
+        hum: '54%',
+        wind: '12 km/h',
+        uv: '5 Mod',
+        latency: '62ms',
+        json: {
+          status: 200,
+          city: 'New York',
+          country: 'US',
+          metrics: { temp_c: 18.1, humidity: 54, wind_kmh: 12, uv_index: 5 },
+          cached: false,
+          response_ms: 62
+        }
+      },
+      tokyo: {
+        temp: '21°C',
+        condition: 'Clear Evening Breeze',
+        region: 'Tokyo, JP · 35.6762° N, 139.6503° E',
+        hum: '58%',
+        wind: '11 km/h',
+        uv: '3 Mod',
+        latency: '84ms',
+        json: {
+          status: 200,
+          city: 'Tokyo',
+          country: 'JP',
+          metrics: { temp_c: 21.0, humidity: 58, wind_kmh: 11, uv_index: 3 },
+          cached: true,
+          response_ms: 84
+        }
+      }
+    };
+
+    let currentCity = 'lagos';
+    let weatherJsonVisible = false;
+
+    function selectWeatherCity(city) {
+      currentCity = city;
+      const d = weatherDataset[city];
+      document.getElementById('weather-endpoint-url').textContent = `/v1/forecast?city=${city}&units=metric`;
+      document.getElementById('weather-latency').textContent = d.latency;
+      document.getElementById('weather-temp').textContent = d.temp;
+      document.getElementById('weather-condition').textContent = d.condition;
+      document.getElementById('weather-region').textContent = d.region;
+      document.getElementById('weather-hum').textContent = d.hum;
+      document.getElementById('weather-wind').textContent = d.wind;
+      document.getElementById('weather-uv').textContent = d.uv;
+      document.getElementById('weather-json-panel').textContent = JSON.stringify(d.json, null, 2);
+
+      document.querySelectorAll('.city-chip').forEach((chip) => {
+        const active = chip.getAttribute('data-city') === city;
+        chip.className = active
+          ? 'city-chip px-3 py-1 rounded-lg bg-cyanAccent/20 border border-cyanAccent/50 text-cyan-200 font-medium transition-all'
+          : 'city-chip px-3 py-1 rounded-lg bg-surface border border-white/10 text-muted hover:text-ink transition-all';
+      });
+    }
+
+    function toggleWeatherView() {
+      weatherJsonVisible = !weatherJsonVisible;
+      document.getElementById('weather-visual-panel').classList.toggle('hidden', weatherJsonVisible);
+      document.getElementById('weather-json-panel').classList.toggle('hidden', !weatherJsonVisible);
+      document.getElementById('weather-mode-btn').textContent = weatherJsonVisible ? 'Visual UI' : '{ } Raw JSON';
+    }
+
+    // 5. Playable Interactive JS Quiz & Countdown Engine
+    const quizQuestions = [
+      {
+        q: 'Which statement pauses async function execution until a Promise settles?',
+        options: ['await', 'defer', 'yieldAll'],
+        answer: 0
+      },
+      {
+        q: 'Which method safely converts a JSON string payload into a JS object?',
+        options: ['JSON.toObject()', 'JSON.parse()', 'JSON.stringify()'],
+        answer: 1
+      },
+      {
+        q: 'Which array method creates a new array populated with transformed elements?',
+        options: ['Array.prototype.forEach()', 'Array.prototype.map()', 'Array.prototype.reduceRight()'],
+        answer: 1
+      },
+      {
+        q: 'Which HTTP status range indicates a successful REST API response?',
+        options: ['200–299', '300–399', '400–499'],
+        answer: 0
+      }
+    ];
+
+    let quizIdx = 0;
+    let quizScore = 0;
+    let quizStreak = 0;
+    let quizLocked = false;
+    let quizTimer = null;
+    let timeRemaining = 100;
+
+    function startQuizQuestionTimer() {
+      clearInterval(quizTimer);
+      timeRemaining = 100;
+      const bar = document.getElementById('quiz-timer-bar');
+      if (bar) bar.style.width = '100%';
+
+      quizTimer = setInterval(() => {
+        if (quizLocked) return;
+        timeRemaining -= 2;
+        if (bar) bar.style.width = Math.max(0, timeRemaining) + '%';
+        if (timeRemaining <= 0) {
+          clearInterval(quizTimer);
+          handleQuizChoice(-1, null);
+        }
+      }, 220);
+    }
+
+    function renderQuizEngine() {
+      quizLocked = false;
+      const prog = document.getElementById('quiz-progress-text');
+      const streak = document.getElementById('quiz-streak');
+      const badge = document.getElementById('quiz-score-badge');
+      const qBox = document.getElementById('quiz-question-box');
+      const optBox = document.getElementById('quiz-options-box');
+
+      streak.textContent = `Streak: ${quizStreak}`;
+      badge.textContent = `Score: ${quizScore}`;
+
+      if (quizIdx >= quizQuestions.length) {
+        clearInterval(quizTimer);
+        prog.textContent = 'Finished';
+        document.getElementById('quiz-timer-bar').style.width = '100%';
+        qBox.textContent = `Run Complete — Final Score: ${quizScore}/${quizQuestions.length}`;
+        optBox.innerHTML = `
+          <button
+            type="button"
+            onclick="restartQuizEngine()"
+            class="w-full py-2 px-3 rounded-lg bg-gradient-to-r from-indigoAccent to-cyanAccent text-white font-mono text-xs font-semibold"
+          >
+            Restart State Engine ↻
+          </button>
+        `;
+        return;
+      }
+
+      const item = quizQuestions[quizIdx];
+      prog.textContent = `Q${quizIdx + 1} / ${quizQuestions.length}`;
+      qBox.textContent = item.q;
+      optBox.innerHTML = item.options
+        .map(
+          (opt, idx) => `
+          <button
+            type="button"
+            onclick="handleQuizChoice(${idx}, this)"
+            class="quiz-choice w-full text-left px-3 py-1.5 rounded-lg bg-surface border border-white/10 hover:border-cyanAccent/50 font-mono text-xs text-muted hover:text-ink transition-all"
+          >
+            ${opt}
+          </button>
+        `
+        )
+        .join('');
+
+      startQuizQuestionTimer();
+    }
+
+    function handleQuizChoice(choiceIdx, btnEl) {
+      if (quizLocked) return;
+      quizLocked = true;
+      clearInterval(quizTimer);
+
+      const correctIdx = quizQuestions[quizIdx].answer;
+      const allBtns = document.querySelectorAll('.quiz-choice');
+
+      if (choiceIdx === correctIdx) {
+        quizScore++;
+        quizStreak++;
+        if (btnEl) {
+          btnEl.classList.remove('border-white/10', 'text-muted');
+          btnEl.classList.add('border-emeraldAccent', 'bg-emeraldAccent/15', 'text-emerald-300');
+        }
+      } else {
+        quizStreak = 0;
+        if (btnEl) {
+          btnEl.classList.remove('border-white/10', 'text-muted');
+          btnEl.classList.add('border-rose-500', 'bg-rose-500/15', 'text-rose-300');
+        }
+        if (allBtns[correctIdx]) {
+          allBtns[correctIdx].classList.add('border-emeraldAccent', 'text-emerald-300');
+        }
+      }
+
+      setTimeout(() => {
+        quizIdx++;
+        renderQuizEngine();
+      }, 650);
+    }
+
+    function restartQuizEngine() {
+      quizIdx = 0;
+      quizScore = 0;
+      quizStreak = 0;
+      renderQuizEngine();
+    }
+
+    // 6. Corporate Web Platform Viewport Scrubber
+    function scrubViewport(mode) {
+      const frame = document.getElementById('corp-preview-frame');
+      const grid = document.getElementById('corp-Preview-grid');
+      const readout = document.getElementById('corp-vp-readout');
+
+      if (mode === 'desktop') {
+        frame.style.width = '100%';
+        grid.className = 'grid grid-cols-3 gap-2 transition-all duration-300';
+        readout.textContent = '1280px · Enterprise Grid';
+      } else if (mode === 'tablet') {
+        frame.style.width = '74%';
+        grid.className = 'grid grid-cols-2 gap-2 transition-all duration-300';
+        readout.textContent = '768px · Tablet Adaptive';
+      } else {
+        frame.style.width = '48%';
+        grid.className = 'grid grid-cols-1 gap-2 transition-all duration-300';
+        readout.textContent = '390px · Mobile Stack';
+      }
+
+      document.querySelectorAll('.vp-scrub').forEach((btn) => {
+        const active = btn.getAttribute('data-vp') === mode;
+        btn.className = active
+          ? 'vp-scrub px-2 py-0.5 rounded-md bg-indigoAccent text-white transition-colors'
+          : 'vp-scrub px-2 py-0.5 rounded-md text-muted hover:text-ink transition-colors';
+      });
+    }
+
+    // 7. Python Compound Analytics Simulator
+    function updateCompoundSim() {
+      const P = Number(document.getElementById('ci-principal').value);
+      const r = Number(document.getElementById('ci-rate').value) / 100;
+      const t = Number(document.getElementById('ci-years').value);
+
+      document.getElementById('ci-p-val').textContent = '$' + P.toLocaleString();
+      document.getElementById('ci-r-val').textContent = Math.round(r * 100) + '%';
+      document.getElementById('ci-y-val').textContent = t + ' yrs';
+
+      const yearlyValues = [];
+      for (let yr = 1; yr <= t; yr++) {
+        yearlyValues.push(P * Math.pow(1 + r / 12, 12 * yr));
+      }
+
+      const finalAmount = yearlyValues[yearlyValues.length - 1];
+      const yieldEarned = finalAmount - P;
+
+      document.getElementById('ci-total').textContent = '$' + Math.round(finalAmount).toLocaleString();
+      document.getElementById('ci-profit').textContent = `(+$${Math.round(yieldEarned).toLocaleString()} yield)`;
+
+      const maxVal = Math.max(...yearlyValues);
+      const barsContainer = document.getElementById('ci-bars');
+      const step = Math.max(1, Math.ceil(yearlyValues.length / 10));
+      const sampled = yearlyValues.filter((_, idx) => idx % step === 0 || idx === yearlyValues.length - 1);
+
+      barsContainer.innerHTML = sampled
+        .map((val) => {
+          const heightPct = Math.max(18, Math.round((val / maxVal) * 100));
+          return `<div class="flex-1 rounded-t bg-gradient-to-t from-indigoAccent to-cyanAccent transition-all duration-300" style="height:${heightPct}%" title="$${Math.round(val).toLocaleString()}"></div>`;
+        })
+        .join('');
+    }
+
+    // 8. Interactive Developer Terminal Emulator
+    const terminalResponses = {
+      help: `<div class="text-muted">Available commands:
+  <span class="text-cyanAccent">about</span>      — Engineering summary &amp; philosophy
+  <span class="text-cyanAccent">skills</span>     — Technical stack &amp; core proficiencies
+  <span class="text-cyanAccent">projects</span>   — Selected software builds
+  <span class="text-cyanAccent">neofetch</span>   — System &amp; developer telemetry
+  <span class="text-cyanAccent">whoami</span>     — Current user session
+  <span class="text-cyanAccent">contact</span>    — Direct email &amp; GitHub links
+  <span class="text-cyanAccent">clear</span>      — Clear terminal buffer</div>`,
+      whoami: `<div class="text-emeraldAccent">sylvanus.johnson — Frontend &amp; API Software Engineer</div>`,
+      about: `<div class="text-gray-300">Sylvanus Johnson is a hands-on Software Engineer focused on building fast, interactive web applications, clean REST API integrations, JavaScript state engines, and Python analytical scripts.</div>`,
+      skills: `<div class="text-gray-300">[Frontend]   HTML5, Modern CSS3, CSS Grid/Flexbox, Responsive Architecture
+[JavaScript] ES6+, Async/Await, Fetch API, DOM State Management, JSON
+[Scripting]  Python 3, Financial &amp; Algorithmic Automation
+[Workflow]   Git, GitHub (Sylvanus-YO), VS Code, Performance Debugging</div>`,
+      projects: `<div class="text-gray-300">1. <span class="text-cyanAccent">Weather &amp; Telemetry API App</span> — Live REST fetch &amp; JSON parser
+2. <span class="text-cyanAccent">Interactive JS Quiz Engine</span>  — Countdown state machine &amp; score tracker
+3. <span class="text-cyanAccent">Corporate Systems Platform</span>  — Enterprise web UI &amp; Maps integration
+4. <span class="text-cyanAccent">Python Compound Analytics</span>   — Multi-year financial modeling engine</div>`,
+      contact: `<div class="text-gray-300">Email  : <span class="text-emeraldAccent">youngicon313@gmail.com</span>
+GitHub : <a href="https://github.com/Sylvanus-YO" target="_blank" rel="noopener" class="text-cyanAccent underline">https://github.com/Sylvanus-YO</a></div>`,
+      neofetch: `<div class="grid grid-cols-1 sm:grid-cols-12 gap-3 text-xs">
+  <pre class="sm:col-span-4 text-cyanAccent leading-tight">   ____     _
+  / ___|   | |
+  \\___ \\ _ | |
+   ___) | || |
+  |____/ \\__/ </pre>
+  <div class="sm:col-span-8 space-y-0.5 text-gray-300">
+    <div><span class="text-indigo-400 font-bold">sylvanus</span>@<span class="text-cyanAccent font-bold">dev-workstation</span></div>
+    <div class="text-dim">----------------------------</div>
+    <div><span class="text-muted">Role:</span> Frontend &amp; API Software Engineer</div>
+    <div><span class="text-muted">Stack:</span> JS (ES6+), HTML/CSS, REST, Python</div>
+    <div><span class="text-muted">Shell:</span> portfolio-zsh 2.4</div>
+    <div><span class="text-muted">Status:</span> <span class="text-emeraldAccent">Ready to ship</span></div>
+  </div>
+</div>`
+    };
+
+    function appendTerminalBlock(cmd, htmlOutput) {
+      const out = document.getElementById('term-output');
+      const wrapper = document.createElement('div');
+      wrapper.className = 'space-y-1';
+      wrapper.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="text-emeraldAccent font-semibold">sylvanus@dev:~$</span>
+          <span class="text-ink">${cmd}</span>
+        </div>
+        <div>${htmlOutput}</div>
+      `;
+      out.appendChild(wrapper);
+      out.scrollTop = out.scrollHeight;
+    }
+
+    function execTerminalCmd(rawCmd) {
+      const clean = (rawCmd || '').trim().toLowerCase();
+      const out = document.getElementById('term-output');
+      if (!clean) return;
+
+      if (clean === 'clear') {
+        out.innerHTML = '';
+        return;
+      }
+
+      const safeDisplay = rawCmd.replace(/[<>&"]/g, '');
+      if (terminalResponses[clean]) {
+        appendTerminalBlock(safeDisplay, terminalResponses[clean]);
+      } else {
+        appendTerminalBlock(
+          safeDisplay,
+          `<span class="text-rose-400">zsh: command not found: ${safeDisplay}. Type <span class="text-cyanAccent">'help'</span> for available commands.</span>`
+        );
+      }
+    }
+
+    function handleTerminalSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('term-input');
+      execTerminalCmd(input.value);
+      input.value = '';
+    }
+
+    // 9. Contribution Activity Heatmap Generator
+    function buildContributionHeatmap() {
+      const grid = document.getElementById('heatmap-grid');
+      const readout = document.getElementById('heatmap-readout');
+      if (!grid) return;
+
+      const palette = [
+        'bg-white/[0.04]',
+        'bg-emerald-950/90 border border-emerald-800/40',
+        'bg-emerald-700/75',
+        'bg-emerald-500/85',
+        'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.45)]'
+      ];
+
+      const totalCells = 34 * 7;
+      const frag = document.createDocumentFragment();
+
+      for (let i = 0; i < totalCells; i++) {
+        const seed = (i * 17 + 13) % 19;
+        const level = seed < 4 ? 0 : seed < 9 ? 1 : seed < 14 ? 2 : seed < 17 ? 3 : 4;
+        const commits = level === 0 ? 0 : level * 2 + (i % 3);
+        const weekNum = Math.floor(i / 7) + 1;
+
+        const cell = document.createElement('button');
+        cell.type = 'button';
+        cell.ariaLabel = `${commits} commits in week ${weekNum}`;
+        cell.className = `w-3 h-3 rounded-[3px] transition-transform hover:scale-125 ${palette[level]}`;
+        cell.addEventListener('mouseenter', () => {
+          readout.textContent = `Week ${weekNum}: ${commits} engineering commits & build iterations pushed`;
+        });
+        frag.appendChild(cell);
+      }
+
+      grid.appendChild(frag);
+    }
+
+    // 10. Clipboard & Quick Inquiry Composer
+    let toastTimer = null;
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-msg');
+      msg.textContent = message;
+      toast.classList.remove('opacity-0', 'translate-y-3');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-3');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 2600);
+    }
+
+    function copyToClipboard(text, toastLabel) {
+      try {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand('copy');
+        document.body.removeChild(area);
+        showToast(toastLabel || 'Copied to clipboard');
+      } catch (e) {
+        showToast(text);
+      }
+    }
+
+    function getInquiryPayload() {
+      const name = document.getElementById('msg-name').value.trim() || 'Prospective Collaborator';
+      const scope = document.getElementById('msg-scope').value;
+      const body = document.getElementById('msg-body').value.trim() || 'Hi Sylvanus, I would love to discuss an engineering opportunity.';
+      return { name, scope, body };
+    }
+
+    function handleQuickMessage(e) {
+      e.preventDefault();
+      const { name, scope, body } = getInquiryPayload();
+      const subject = encodeURIComponent(`[${scope}] — Inquiry from ${name}`);
+      const mailBody = encodeURIComponent(`Hi Sylvanus,\n\n${body}\n\nBest regards,\n${name}`);
+      window.location.href = `mailto:youngicon313@gmail.com?subject=${subject}&body=${mailBody}`;
+      showToast('Opening email client for youngicon313@gmail.com');
+    }
+
+    function copyFormattedInquiry() {
+      const { name, scope, body } = getInquiryPayload();
+      const formatted = `To: youngicon313@gmail.com\nSubject: [${scope}] — ${name}\n\n${body}`;
+      copyToClipboard(formatted, 'Formatted inquiry copied to clipboard');
+    }
+
+    // 11. Command Palette (⌘K / Ctrl+K)
+    const paletteActions = [
+      { label: 'Jump to Selected Engineering Projects', tag: 'Section', action: () => { location.hash = '#projects'; } },
+      { label: 'Open Interactive Terminal (sylvanus@dev)', tag: 'Terminal', action: () => { location.hash = '#terminal'; setTimeout(() => document.getElementById('term-input').focus(), 200); } },
+      { label: 'Run `neofetch` in Terminal', tag: 'CLI', action: () => { location.hash = '#terminal'; execTerminalCmd('neofetch'); } },
+      { label: 'Inspect Tech Stack & Commit Matrix', tag: 'Section', action: () => { location.hash = '#stack'; } },
+      { label: 'Copy Email (youngicon313@gmail.com)', tag: 'Clipboard', action: () => copyToClipboard('youngicon313@gmail.com', 'Copied youngicon313@gmail.com') },
+      { label: 'Open GitHub Profile (Sylvanus-YO)', tag: 'External ↗', action: () => window.open('https://github.com/Sylvanus-YO', '_blank', 'noopener') },
+      { label: 'Compose Direct Engineering Inquiry', tag: 'Contact', action: () => { location.hash = '#contact'; setTimeout(() => document.getElementById('msg-name').focus(), 200); } }
+    ];
+
+    function openCommandPalette() {
+      const modal = document.getElementById('cmd-modal');
+      const input = document.getElementById('cmd-input');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      input.value = '';
+      renderPaletteItems('');
+      setTimeout(() => input.focus(), 20);
+    }
+
+    function closeCommandPalette() {
+      const modal = document.getElementById('cmd-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function renderPaletteItems(query) {
+      const list = document.getElementById('cmd-list');
+      const q = (query || '').toLowerCase().trim();
+      const matches = paletteActions.filter(
+        (item) => item.label.toLowerCase().includes(q) || item.tag.toLowerCase().includes(q)
+      );
+
+      if (!matches.length) {
+        list.innerHTML = `<div class="py-6 text-center font-mono text-xs text-muted">No matching commands</div>`;
+        return;
+      }
+
+      list.innerHTML = matches
+        .map((item) => {
+          const idx = paletteActions.indexOf(item);
+          return `
+            <button
+              type="button"
+              onclick="triggerPaletteAction(${idx})"
+              class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-left text-xs sm:text-sm text-ink hover:bg-indigoAccent/15 border border-transparent hover:border-indigoAccent/30 transition-all"
+            >
+              <span>${item.label}</span>
+              <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-obsidian text-muted">${item.tag}</span>
+            </button>
+          `;
+        })
+        .join('');
+    }
+
+    function triggerPaletteAction(index) {
+      closeCommandPalette();
+      if (paletteActions[index]) paletteActions[index].action();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        const isHidden = document.getElementById('cmd-modal').classList.contains('hidden');
+        isHidden ? openCommandPalette() : closeCommandPalette();
+      } else if (e.key === 'Escape') {
+        closeCommandPalette();
+      }
+    });
+
+    // 12. Boot Sequence
+    window.onload = function () {
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+      updateWatClock();
+      setInterval(updateWatClock, 1000);
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+      initInteractiveSurfaces();
+      selectWeatherCity('lagos');
+      renderQuizEngine();
+      scrubViewport('desktop');
+      updateCompoundSim();
+      buildContributionHeatmap();
+
+      // Seed initial terminal welcome output
+      execTerminalCmd('neofetch');
+      appendTerminalBlock('help', terminalResponses.help);
+
+      // Scroll Reveal Observer
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+          });
+        },
+        { threshold: 0.08 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    };
+  </script>
+</body>
+</html>
